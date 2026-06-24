@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhishGuard AI</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { width: 340px; background: #0f172a; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 20px; }
+    .header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .logo { font-size: 24px; }
+    h1 { font-size: 16px; font-weight: 700; color: #60a5fa; }
+    h1 span { display: block; font-size: 11px; font-weight: 400; color: #64748b; }
+    .scan-box { background: #1e293b; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+    .url { font-size: 12px; color: #94a3b8; word-break: break-all; margin-bottom: 12px; }
+    #result { display: none; }
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 100px; font-size: 12px; font-weight: 700; }
+    .badge-phishing { background: #450a0a; color: #f87171; }
+    .badge-suspicious { background: #422006; color: #fbbf24; }
+    .badge-legitimate { background: #052e16; color: #4ade80; }
+    .risk-bar { background: #334155; border-radius: 100px; height: 6px; margin: 8px 0; overflow: hidden; }
+    .risk-fill { height: 100%; border-radius: 100px; transition: width 0.4s; }
+    .risk-label { font-size: 12px; color: #64748b; }
+    button { width: 100%; padding: 10px; background: #3b82f6; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 14px; }
+    button:hover { background: #2563eb; }
+    .rec { font-size: 12px; color: #94a3b8; margin-top: 8px; padding-top: 8px; border-top: 1px solid #1e293b; }
+    .loading { text-align: center; color: #64748b; font-size: 13px; padding: 12px 0; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">🛡️</div>
+    <h1>PhishGuard AI <span>Threat Intelligence Platform</span></h1>
+  </div>
+
+  <div class="scan-box">
+    <div class="url" id="current-url">Loading current tab URL...</div>
+    <div id="loading" class="loading" style="display:none">Scanning...</div>
+    <div id="result">
+      <div id="badge-container"></div>
+      <div class="risk-bar" style="margin-top:10px">
+        <div class="risk-fill" id="risk-fill"></div>
+      </div>
+      <div class="risk-label">Risk Score: <span id="risk-value"></span>%</div>
+      <div class="rec" id="recommendations"></div>
+    </div>
+    <button id="scan-btn" style="margin-top:12px">Scan This Page</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
