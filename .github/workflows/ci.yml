@@ -22,7 +22,7 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r requirements.txt
       - name: Train model (synthetic)
-        run: python scripts/train_model.py
+        run: PYTHONPATH=. python scripts/train_model.py
       - name: Run backend tests
         run: python -m pytest tests/ -v --tb=short
 
