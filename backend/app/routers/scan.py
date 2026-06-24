@@ -297,36 +297,6 @@ def get_stats(db: Session = Depends(get_db), current_user=Depends(get_current_us
     query = db.query(models.ScanHistory)
     if current_user:
         query = query.filter(models.ScanHistory.user_id == current_user.id)
-
-    total = query.count()
-    phishing = query.filter(models.ScanHistory.prediction == "phishing").count()
-    suspicious = query.filter(models.ScanHistory.prediction == "suspicious").count()
-    legitimate = query.filter(models.ScanHistory.prediction == "legitimate").count()
-    return {"total": total, "phishing": phishing, "suspicious": suspicious, "legitimate": legitimate}
-
-
-@router.get("/feed")
-def public_threat_feed(limit: int = Query(20, le=100), db: Session = Depends(get_db)):
-    """Public feed of recently detected phishing/suspicious URLs."""
-    rows = (
-        db.query(models.ScanHistory)
-        .filter(models.ScanHistory.prediction.in_(["phishing", "suspicious"]))
-        .order_by(models.ScanHistory.scanned_at.desc())
-        .limit(limit)
-        .all()
-    )
-    return [
-        {"url": r.url, "prediction": r.prediction, "risk_score": r.risk_score,
-         "scanned_at": r.scanned_at.isoformat()}
-        for r in rows
-    ]
-
-
-@router.get("/stats")
-def get_stats(db: Session = Depends(get_db), current_user=Depends(get_current_user)):
-    query = db.query(models.ScanHistory)
-    if current_user:
-        query = query.filter(models.ScanHistory.user_id == current_user.id)
     total = query.count()
     phishing = query.filter(models.ScanHistory.prediction == "phishing").count()
     suspicious = query.filter(models.ScanHistory.prediction == "suspicious").count()
